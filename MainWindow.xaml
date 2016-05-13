@@ -1,0 +1,47 @@
+﻿<Window x:Class="AsukaEkidenSaveDataManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AsukaEkidenSaveDataManager"
+        mc:Ignorable="d"
+        Title="アスカ駅伝セーブデータ管理ツール" Height="300" Width="800">
+    <StackPanel>
+        <GroupBox Header="セーブデータ保存フォルダ" Margin="10, 10, 10, 0" Padding="5">
+            <StackPanel>
+                <DockPanel HorizontalAlignment="Stretch">
+                    <Button x:Name="buttonSelectSaveDataFolder" Content="参照" Width="50" DockPanel.Dock="Left" Click="buttonSelectSaveDataFolder_Click" />
+                    <TextBox x:Name="textBoxSaveDataFolder" Height="24" TextWrapping="Wrap" Margin="10, 0, 0, 0" DockPanel.Dock="Right" TextChanged="textBoxSaveDataFolder_TextChanged" />
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="自分のセーブデータ" Margin="10, 10, 10, 0" Padding="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="48" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" x:Name="buttonBackup" Content="バックアップ" Click="buttonBackup_Click"/>
+                <Button Grid.Column="2" x:Name="buttonRestore" Content="復元" Click="buttonRestore_Click"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="駅伝用セーブデータ" Margin="10, 10, 10, 0" Padding="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="48" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" x:Name="buttonImport" Content="インポート" Click="buttonImport_Click"/>
+                <Button Grid.Column="2" x:Name="buttonExport" Content="エクスポート" Click="buttonExport_Click"/>
+            </Grid>
+        </GroupBox>
+    </StackPanel>
+</Window>
