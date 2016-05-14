@@ -28,7 +28,7 @@ namespace AsukaEkidenSaveDataManager
 
             if (string.IsNullOrWhiteSpace(Config.Current.SaveDataFolder))
             {
-                // todo : implement
+                Config.Current.SaveDataFolder = GetInitialSaveDataFolder();
             }
 
             textBoxSaveDataFolder.Text = Config.Current.SaveDataFolder;
@@ -162,6 +162,29 @@ namespace AsukaEkidenSaveDataManager
         #endregion
 
         #region method
+
+        private static string GetInitialSaveDataFolder()
+        {
+            var localApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var programFilesX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+            var programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+            var virtualStore = @"VirtualStore\Program Files (x86)";
+            var asukaPC = @"CHUNSOFT\AsukaPC\save";
+
+            var path = Path.Combine(localApplicationData, virtualStore, asukaPC);
+
+            if (Directory.Exists(path) && 0 < Directory.GetFiles(path).Length) return path;
+
+            path = Path.Combine(programFilesX86, asukaPC);
+
+            if (Directory.Exists(path) && 0 < Directory.GetFiles(path).Length) return path;
+
+            path = Path.Combine(programFiles, asukaPC);
+
+            if (Directory.Exists(path) && 0 < Directory.GetFiles(path).Length) return path;
+
+            return string.Empty;
+        }
 
         private static bool ExtractZipFile(string source, string destFile)
         {
