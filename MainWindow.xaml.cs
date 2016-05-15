@@ -91,6 +91,12 @@ namespace AsukaEkidenSaveDataManager
             var destDirectory = textBoxSaveDataFolder.Text;
             var destFile = Path.Combine(destDirectory, SaveDataFileName);
 
+            if (!Directory.Exists(destDirectory))
+            {
+                ShowMessageBoxError("セーブデータ保存フォルダが存在しません。");
+                return;
+            }
+
             if (source.ToLower().EndsWith(".zip"))
             {
                 var done = ExtractZipFile(source, destFile);
@@ -192,6 +198,18 @@ namespace AsukaEkidenSaveDataManager
             try
             {
                 zipFile = new ZipFile(source);
+
+                if (!zipFile.TestArchive(true))
+                {
+                    zipFile.Password = Microsoft.VisualBasic.Interaction.InputBox("パスワードを入力してください。", "パスワード入力");
+
+                    if (!zipFile.TestArchive(true))
+                    {
+                        ShowMessageBoxError("パスワードが違うか、ファイルが破損しています。");
+                        return false;
+                    }
+                }
+
                 ZipEntry targetZipEntry = null;
 
                 foreach (ZipEntry zipEntry in zipFile)
