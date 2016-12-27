@@ -58,7 +58,7 @@
 
 ## インストール & アンインストール
 
-[ここ](https://github.com/rgx6/AsukaEkidenSaveDataManager/releases)
+[ここ](https://github.com/rgx6/AsukaEkidenSaveDataManager/releases/latest)
 から最新の `AsukaEkidenSaveDataManager_v*.*.*.zip` をダウンロード、解凍し、適当なフォルダに置いてください。  
 いらなくなったらフォルダごと削除してください。
 

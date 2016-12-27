@@ -81,6 +81,7 @@ namespace AsukaEkidenSaveDataManager
 
         private void buttonImport_Click(object sender, RoutedEventArgs e)
         {
+            // HACK : ASUKA____002 と ASUKA____002.zip が同時に存在すると ASUKA____002 を指定したときに source が ASUKA____002.zip になってしまうので対策する。
             var dialog = new System.Windows.Forms.OpenFileDialog();
             dialog.Title = "駅伝用のセーブデータを選択してください。";
             dialog.Filter = SaveDataFileName + ", *.zip|" + SaveDataFileName + ";*.zip";
@@ -90,6 +91,12 @@ namespace AsukaEkidenSaveDataManager
             var source = dialog.FileName;
             var destDirectory = textBoxSaveDataFolder.Text;
             var destFile = Path.Combine(destDirectory, SaveDataFileName);
+
+            if (source == destFile)
+            {
+                ShowMessageBoxError("インポート元とインポート先が同じです。");
+                return;
+            }
 
             if (!Directory.Exists(destDirectory))
             {
@@ -115,7 +122,9 @@ namespace AsukaEkidenSaveDataManager
 
             DeleteRegistry();
 
-            ShowMessageBoxComplete("駅伝用セーブデータのインポートが完了しました。");
+            ShowMessageBoxComplete(
+                "駅伝用セーブデータのインポートが完了しました。\nインポートしたセーブデータの更新日時: "
+                + File.GetLastWriteTime(destFile).ToString("yyyy/MM/dd HH:mm:ss"));
         }
 
         private void buttonExport_Click(object sender, RoutedEventArgs e)
@@ -241,6 +250,10 @@ namespace AsukaEkidenSaveDataManager
                 {
                     StreamUtils.Copy(zipStream, writer, buffer);
                 }
+
+                File.SetCreationTime(destFile, targetZipEntry.DateTime);
+                File.SetLastWriteTime(destFile, targetZipEntry.DateTime);
+                File.SetLastAccessTime(destFile, targetZipEntry.DateTime);
 
                 return true;
             }
