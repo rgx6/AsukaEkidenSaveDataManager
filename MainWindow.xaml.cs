@@ -273,6 +273,12 @@ namespace AsukaEkidenSaveDataManager
         {
             var registryKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\ChunSoft\Asuka4Windows", true);
 
+            if (registryKey == null)
+            {
+                ShowMessageBoxError("レジストリが登録されていません。");
+                return;
+            }
+
             registryKey.DeleteValue("SSC_Value02", false);
             registryKey.DeleteValue("SSK_Value02", false);
 
