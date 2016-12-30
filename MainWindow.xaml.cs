@@ -145,7 +145,9 @@ namespace AsukaEkidenSaveDataManager
             var fileFilter = @"\\" + SaveDataFileName + "$";
             fastZip.CreateZip(dest, sourceDirectory, false, fileFilter);
 
-            ShowMessageBoxComplete("駅伝用セーブデータのエクスポートが完了しました。");
+            ShowMessageBoxComplete(
+                "駅伝用セーブデータのエクスポートが完了しました。\nエクスポートしたセーブデータの更新日時: "
+                + File.GetLastWriteTime(sourceFile).ToString("yyyy/MM/dd HH:mm:ss"));
 
             Process.Start("EXPLORER.EXE", @"/select,""" + dest + @"""");
         }
